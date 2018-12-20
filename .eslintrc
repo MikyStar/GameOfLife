@@ -1,0 +1,56 @@
+{
+	"env":
+	{
+		"node": true,
+		"es6": true
+	},
+	"extends": "eslint:recommended",
+	"parserOptions":
+	{
+		"ecmaVersion": 8
+	},
+	"rules":
+	{
+		"camelcase": "warn",
+		"brace-style":
+		[
+			"warn",
+			"allman",
+			{
+				"allowSingleLine": true
+			}
+		],
+		"no-console": "off",
+		"no-empty": "warn",
+		"use-isnan": "warn",
+		"no-useless-escape": "off",
+		"valid-jsdoc": "warn",
+		"no-invalid-this": "warn",
+		"no-multi-spaces": "warn",
+		"no-unexpected-multiline": "off",
+		"no-new": "warn",
+		"no-unused-vars": "warn",
+		"no-redeclare": "warn",
+		"no-undef": "off",
+		"array-bracket-spacing": "off",
+		"block-spacing": "warn",
+		"comma-spacing":
+		[
+			"warn",
+			{
+				"before": false,
+				"after": true
+			}
+		],
+		"comma-style":
+		[
+			"warn",
+			"last"
+		],
+		"func-call-spacing":
+		[
+			"warn",
+			"never"
+		]
+	}
+}
