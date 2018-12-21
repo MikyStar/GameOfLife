@@ -18,6 +18,7 @@
 	},
 	"homepage": "https://github.com/MikyStar/GameOfLife#readme",
 	"dependencies": {
+		"chalk": "^2.4.1",
 		"optimist": "^0.6.1"
 	}
 }

@@ -1,11 +1,8 @@
 const myArgs = require( 'optimist' ).argv;
+const fileSystem = require( 'fs' );
 
-const helpText = 	'\n'
-					+ 'Launch the Game of Life !' + '\n'
-					+ '\n'
-					+ '-g or --generations <number> : The number of generations simulated' + '\n'
-					+ '-u or --universe <file> : The JSON file describing the universe' + '\n'
-					+ '-d or --draw : Maked the program prunt the generations in the console' + '\n' ;
+const regex = require( './regexMaster' );
+const messageDisplayer = require( './messageDisplayer' );
 
 /**
  * @description Handle arguments
@@ -16,24 +13,42 @@ module.exports =
 {
 	handle : () =>
 	{
+		if( ( myArgs.help ) || ( myArgs.h ) ) messageDisplayer.help()
 
-		if ( ( myArgs.h ) || ( myArgs.help ) )
+		const arguments =
 		{
-			module.exports.printHelp();
-			process.exit( 0 );
+			generations : myArgs.generations || myArgs.g,
+			universe : myArgs.universe || myArgs.u,
+			draw : myArgs.draw || myArgs.d,
+			rules : undefined
 		}
+		arguments.rules = checkRules();
 
-		console.log(myArgs.g || myArgs.generations, "generations");
-		console.log(myArgs.u || myArgs.universe, "universe");
-		console.log(myArgs.D || myArgs.draw, "draw");
+		//////////////////////////////////////////////////////////////////////////////////////////
 
-		console.log( 'myArgs: ', myArgs );
+		function checkRules()
+		{
+			const supposedFileName = myArgs.rules || myArgs.r;
+
+			if( supposedFileName )
+			{
+				if( fileSystem.existsSync( supposedFileName ) )
+				{
+					if( regex.getFileExtensions( supposedFileName ) === '.json' )
+						return `${ supposedFileName }`
+					else
+					{
+						messageDisplayer.error( 'You must provide a JSON file as rules' );
+					}
+				}
+				else
+				{
+					console.log( 'You must provide a valid file as rules argument' );
+					process.exit( -1 )
+				}
+			}
+		}
 	},
-
-	printHelp : () =>
-	{
-		console.log(helpText);
-	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
