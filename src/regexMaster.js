@@ -2,6 +2,6 @@ module.exports =
 {
 	getFileExtensions : file =>
 	{
-		return /\.([0-9a-z]+)(?=[?#])|(\.)(?:[\w]+)$/gim.test( file );
+		return file.slice( ( Math.max( 0, file.lastIndexOf( "." ) ) || Infinity ) + 1 );
 	}
 }

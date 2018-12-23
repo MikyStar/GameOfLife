@@ -11,8 +11,9 @@
 			"program": "${workspaceFolder}/index.js",
 			"args":
 			[
-				"-r README.md",
-				"-u huge",
+				"generate",
+				"-r", "temp.js",
+				"-u", "temp.json",
 				"--draw"
 			],
 			"skipFiles":

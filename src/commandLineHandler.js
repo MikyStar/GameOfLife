@@ -4,49 +4,62 @@ const fileSystem = require( 'fs' );
 const regex = require( './regexMaster' );
 const messageDisplayer = require( './messageDisplayer' );
 
-/**
- * @description Handle arguments
- *
- * @returns { Arguments } All the arguments properly parsed
- */
 module.exports =
 {
+	/**
+	* @description Handle arguments
+	*
+	* @returns { Arguments } All the arguments properly parsed
+	*/
 	handle : () =>
 	{
 		if( ( myArgs.help ) || ( myArgs.h ) ) messageDisplayer.help()
 
+		const supposedRulesFile = myArgs.rules || myArgs.r;
+		const supposedUniverseFile = myArgs.universe || myArgs.u;
+
 		const arguments =
 		{
+			action : undefined,
 			generations : myArgs.generations || myArgs.g,
 			universe : myArgs.universe || myArgs.u,
 			draw : myArgs.draw || myArgs.d,
 			rules : undefined
 		}
-		arguments.rules = checkRules();
+		arguments.action = checkAction();
+		arguments.rules = checkFile( supposedRulesFile, 'json' );
+		arguments.universe = checkFile( supposedUniverseFile, 'json' );
 
 		//////////////////////////////////////////////////////////////////////////////////////////
 
-		function checkRules()
-		{
-			const supposedFileName = myArgs.rules || myArgs.r;
 
-			if( supposedFileName )
+		function checkFile( filePath, extension )
+		{
+			const errorMessage = `You must provide a valid ${ extension } file, ${ filePath } is not.`
+			if ( filePath )
 			{
-				if( fileSystem.existsSync( supposedFileName ) )
+				if ( fileSystem.existsSync( filePath ) )
 				{
-					if( regex.getFileExtensions( supposedFileName ) === '.json' )
-						return `${ supposedFileName }`
+					if ( regex.getFileExtensions( filePath ) === extension )
+						return `${ filePath }`
 					else
-					{
-						messageDisplayer.error( 'You must provide a JSON file as rules' );
-					}
+						messageDisplayer.error( errorMessage );
 				}
 				else
-				{
-					console.log( 'You must provide a valid file as rules argument' );
-					process.exit( -1 )
-				}
+					messageDisplayer.error( `${ filePath } doesn't exists` );
 			}
+			else
+				messageDisplayer.error( 'No file provided' )
+		}
+
+		function checkAction()
+		{
+			const action = myArgs._[ 0 ];
+
+			if( ( action === 'generate' ) || ( action === 'analyze' ) )
+				return action;
+			else
+				messageDisplayer.error( `You must provide either 'generate' or analyze as first argument` );
 		}
 	},
 }
@@ -55,7 +68,9 @@ module.exports =
 
 /**
  * @typedef Arguments
+ * @property { 'generate' | 'analyze' } action
  * @property { number } generations
  * @property { boolean } draw
  * @property { file } universe
+ * @property { file } rules
  */
