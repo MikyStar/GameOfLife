@@ -18,7 +18,7 @@ module.exports =
 		const supposedRulesFile = myArgs.rules || myArgs.r;
 		const supposedUniverseFile = myArgs.universe || myArgs.u;
 
-		const arguments =
+		const cliArgs =
 		{
 			action : undefined,
 			generations : myArgs.generations || myArgs.g,
@@ -26,14 +26,16 @@ module.exports =
 			draw : myArgs.draw || myArgs.d,
 			rules : undefined
 		}
-		arguments.action = checkAction();
-		arguments.rules = checkFile( supposedRulesFile, 'json' );
-		arguments.universe = checkFile( supposedUniverseFile, 'json' );
+		cliArgs.action = checkAction();
+		cliArgs.rules = JSON.parse( checkAndRetrieveFile( supposedRulesFile, 'json' ) );
+		cliArgs.universe = JSON.parse( checkAndRetrieveFile( supposedUniverseFile, 'json' ) );
+
+		return cliArgs;
 
 		//////////////////////////////////////////////////////////////////////////////////////////
 
 
-		function checkFile( filePath, extension )
+		function checkAndRetrieveFile( filePath, extension )
 		{
 			const errorMessage = `You must provide a valid ${ extension } file, ${ filePath } is not.`
 			if ( filePath )
@@ -41,7 +43,7 @@ module.exports =
 				if ( fileSystem.existsSync( filePath ) )
 				{
 					if ( regex.getFileExtensions( filePath ) === extension )
-						return `${ filePath }`
+						return fileSystem.readFileSync( filePath, 'utf8' )
 					else
 						messageDisplayer.error( errorMessage );
 				}

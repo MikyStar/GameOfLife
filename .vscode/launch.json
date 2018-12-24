@@ -12,8 +12,8 @@
 			"args":
 			[
 				"generate",
-				"-r", "temp.js",
-				"-u", "temp.json",
+				"-r", "rules.json",
+				"-u", "universe.json",
 				"--draw"
 			],
 			"skipFiles":
