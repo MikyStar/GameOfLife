@@ -13,10 +13,10 @@ module.exports = class Universe
 
 		if ( Array.isArray( json ) )
 		{
-			let lengthFirstLine = json[ 0 ].length;
-
 			( function checkLinesSameLength()
 			{
+				let lengthFirstLine = json[0].length;
+
 				for( let i = 0; i < json.length; i++ )
 				{
 					if ( json[ i ].length !== lengthFirstLine )
@@ -26,7 +26,14 @@ module.exports = class Universe
 
 			( function checkCellsFormat()
 			{
-				// TODO Check if there's only 0 and 1 and maybe begin creating the data structure handling areas of interests in the map
+				json.forEach( line =>
+				{
+					line.forEach( cell =>
+					{
+						if( ( cell !== 0 ) && ( cell !== 1 ) )
+							messageDisplayer.error( 'Your universe file should only contains 0 or 1' )
+					})
+				})
 			})();
 
 			messageDisplayer.verbose( 'Universe set' );

@@ -12,8 +12,6 @@ module.exports =
 	 * @description Prints out your text like console.log if the verbose flag has been activated
 	 *
 	 * @param { string } message Your message
-	 *
-	 * @returns { void } -
 	 */
 	verbose : message =>
 	{
@@ -27,7 +25,7 @@ module.exports =
 
 			const timestamp = `[${ hour }:${ minutes }:${ seconds }.${ ms }]`;
 
-			console.log(`\n ${ timestamp } ${ message } \n`);
+			console.log(`${ timestamp } ${ message }`);
 
 			/////////////////////////////////////////////////
 
@@ -39,11 +37,9 @@ module.exports =
 	},
 
 	/**
-	 * @description Prints your error in red and terminate the program
+	 * @description Prints your error in red to stderr and terminate the program
 	 *
 	 * @param { string } message Your message
-	 *
-	 * @returns { void } -
 	 */
 	error : message =>
 	{
@@ -53,8 +49,6 @@ module.exports =
 
 	/**
 	 * @description Prints the help message and terminate the program
-	 *
-	 * @returns { void } -
 	 */
 	help : () =>
 	{
