@@ -9,15 +9,33 @@ const helpText = 	'Launch the Game of Life !' + '\n'
 module.exports =
 {
 	/**
-	 * @description Just prints out your text like console.log
+	 * @description Prints out your text like console.log if the verbose flag has been activated
 	 *
 	 * @param { string } message Your message
 	 *
 	 * @returns { void } -
 	 */
-	tell : message =>
+	verbose : message =>
 	{
-		console.log(`\n ${message} \n`);
+		if( global.verbose )
+		{
+			const date = new Date();
+			const hour = handleZero( date.getHours() );
+			const minutes = handleZero( date.getMinutes() );
+			const seconds = handleZero( date.getSeconds() );
+			const ms = handleZero( date.getMilliseconds() );
+
+			const timestamp = `[${ hour }:${ minutes }:${ seconds }.${ ms }]`;
+
+			console.log(`\n ${ timestamp } ${ message } \n`);
+
+			/////////////////////////////////////////////////
+
+			function handleZero( aNumber )
+			{
+				return ( aNumber < 10 ) ? `0${ aNumber }` : aNumber;
+			}
+		}
 	},
 
 	/**
@@ -29,7 +47,7 @@ module.exports =
 	 */
 	error : message =>
 	{
-		console.log(`\n ${chalk.red(message)} \n`);
+		console.error(`\n ${chalk.red(message)} \n`);
 		process.exit(0);
 	},
 
