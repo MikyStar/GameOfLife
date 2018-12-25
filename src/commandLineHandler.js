@@ -18,19 +18,24 @@ module.exports =
 		const supposedRulesFile = myArgs.rules || myArgs.r;
 		const supposedUniverseFile = myArgs.universe || myArgs.u;
 
-		const cliArgs =
+		const action = checkAction();
+		const generations = myArgs.generations || myArgs.g || 20;
+		const draw = myArgs.draw || myArgs.d;
+		const universe = ( () =>
 		{
-			action : undefined,
-			generations : myArgs.generations || myArgs.g,
-			universe : myArgs.universe || myArgs.u,
-			draw : myArgs.draw || myArgs.d,
-			rules : undefined
-		}
-		cliArgs.action = checkAction();
-		cliArgs.rules = JSON.parse( checkAndRetrieveFile( supposedRulesFile, 'json' ) );
-		cliArgs.universe = JSON.parse( checkAndRetrieveFile( supposedUniverseFile, 'json' ) );
+			const defaultUniverse = require( './assets/defaultUniverse.json' )
 
-		return cliArgs;
+			return ( myArgs.universe || myArgs.u ) ? JSON.parse( checkAndRetrieveFile( supposedUniverseFile, 'json' ) ) : defaultUniverse;
+		})();
+		const rules = ( () =>
+		{
+			const defaultRules = require( './assets/defaultRules.json' )
+
+			return ( myArgs.rules || myArgs.r ) ? JSON.parse( checkAndRetrieveFile( supposedRulesFile, 'json' ) ) : defaultRules;
+		})();
+
+		global.verbose = myArgs.verbose || myArgs.v;
+		return { action, generations, universe, draw, rules};
 
 		//////////////////////////////////////////////////////////////////////////////////////////
 
