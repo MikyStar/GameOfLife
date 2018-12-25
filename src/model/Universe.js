@@ -1,4 +1,4 @@
-const messageDisplayer = require( './messageDisplayer' );
+const messageDisplayer = require( '../tools/messageDisplayer' );
 
 module.exports = class Universe
 {

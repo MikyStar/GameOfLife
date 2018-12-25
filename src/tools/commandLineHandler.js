@@ -23,13 +23,13 @@ module.exports =
 		const draw = myArgs.draw || myArgs.d;
 		const universe = ( () =>
 		{
-			const defaultUniverse = require( './assets/defaultUniverse.json' )
+			const defaultUniverse = require( '../assets/defaultUniverse.json' )
 
 			return ( myArgs.universe || myArgs.u ) ? JSON.parse( checkAndRetrieveFile( supposedUniverseFile, 'json' ) ) : defaultUniverse;
 		})();
 		const rules = ( () =>
 		{
-			const defaultRules = require( './assets/defaultRules.json' )
+			const defaultRules = require( '../assets/defaultRules.json' )
 
 			return ( myArgs.rules || myArgs.r ) ? JSON.parse( checkAndRetrieveFile( supposedRulesFile, 'json' ) ) : defaultRules;
 		})();

@@ -1,5 +1,5 @@
-const cliHandler = require( './src/commandLineHandler' );
-const Universe = require( './src/Universe' )
+const cliHandler = require( './src/tools/commandLineHandler' );
+const Universe = require( './src/model/Universe' )
 
 const cliArgs = cliHandler.handle();
 
