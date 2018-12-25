@@ -1,15 +1,17 @@
 const messageDisplayer = require( '../tools/messageDisplayer' );
+const RulesSet = require( './RulesSet' )
 
 module.exports = class Universe
 {
 	constructor( jsonUniverse, jsonRules, howManyGenerations )
 	{
 		this.universe = this.setUniverse( jsonUniverse );
+		this.rules = new RulesSet( jsonRules );
 	}
 
 	setUniverse( json )
 	{
-		messageDisplayer.verbose( 'Setting universe ...' );
+		messageDisplayer.verbose( 'Setting up universe ...' );
 
 		if ( Array.isArray( json ) )
 		{
