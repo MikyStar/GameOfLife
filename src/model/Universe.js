@@ -43,4 +43,9 @@ module.exports = class Universe
 		else
 			messageDisplayer.error( 'The universe JSON file you provided needs to be an array, please check out the README explaining it' )
 	}
+
+	getNeighbors( posX, posY )
+	{
+		// TODO + Handle if I'm on a border pretend that there is zeros where there's nothing
+	}
 }
